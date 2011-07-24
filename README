@@ -1,3 +1,9 @@
 Proofnet.
 
 https://forum.bitcoin.org/index.php?topic=31038.0
+
+The format for a Proofnet message is this:
+(proof-of-work hash)(nonce)(utc timestamp)(channel hash)(message type hash)(message)
+
+Where the types are this:
+(sha256 hash)(little endian 64bit integer)(little endian 64bit integer)(sha256 hash)(sha256 hash)(any number of bytes)
