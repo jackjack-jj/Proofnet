@@ -13,6 +13,7 @@ pm.set_message_type(message_type)
 pm.set_message(message.encode())
 pm.do_work()
 
+print("base16 encoded proofnet message: %s" % base64.b16encode(pm.get_bytes()))
 pm2=proofnet.proof_message()
 pm2.decode_from_bytes(pm.get_bytes())
 print("decoded proof: %s" % base64.b16encode(pm2.proof_hash))
