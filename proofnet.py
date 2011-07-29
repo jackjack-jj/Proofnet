@@ -3,12 +3,12 @@ import hashlib
 import time
 
 known_hashes={\
-		hashlib.sha256(b"Proofnet1").digest():b"Proofnet1",\
-		hashlib.sha256(b"Proofnet2").digest():b"Proofnet2",\
-		hashlib.sha256(b"proofnet:text").digest():b"proofnet:text",\
-		hashlib.sha256(b"proofnet:textfrom").digest():b"proofnet:textfrom",\
-		hashlib.sha256(b"proofnet:textto").digest():b"proofnet:textto",\
-		#hashlib.sha256(b"proofnet:chancrypt").digest():b"proofnet:chancrypt",\
+		hashlib.sha256(b"Proofnet1").digest():"Proofnet1",\
+		hashlib.sha256(b"Proofnet2").digest():"Proofnet2",\
+		hashlib.sha256(b"proofnet:text").digest():"proofnet:text",\
+		hashlib.sha256(b"proofnet:textfrom").digest():"proofnet:textfrom",\
+		hashlib.sha256(b"proofnet:textto").digest():"proofnet:textto",\
+		hashlib.sha256(b"proofnet:AESchannel").digest():"proofnet:AESchannel",\
 		}
 
 def invert_hash(hashbytes):
@@ -33,7 +33,7 @@ def is_hash_less(test_hash_bytes, target_bytes):
 #(proof hash)(nonce)(utc time)(channel hash)(message type hash)(message)
 class proof_message:
 	def __init__(self):
-		self.target=bytes()
+		self.target=b"\x00\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"
 		self.proof_hash=bytes()
 		self.nonce=0
 		self.utc_time=time.time()
@@ -82,6 +82,17 @@ class proof_message:
 		b+=self.message
 		return b
 
+	def is_recent(self):
+		if not time.time()-60*10<self.utc_time<time.time()+60*10:
+			return False
+
+	def is_proof_hash_correct(self):
+		supposed_hash=self.proof_hash
+		actual_hash=hashlib.sha256(self.get_after_proof_bytes().digest())
+		if supposed_hash!=actual_hash:
+			return False
+		return True
+
 	def get_bytes(self):
 		return self.proof_hash+self.get_after_proof_bytes()
 
@@ -105,3 +116,20 @@ class proof_message:
 				testhash_bytes=self.proof_hash
 				if is_hash_less(testhash_bytes,self.target):
 					return progress
+
+class proof_message_text(proof_message):
+	def get_text(self):
+		return m.encode('utf-8')
+
+
+
+
+
+
+
+
+
+
+
+
+
