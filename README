@@ -3,6 +3,8 @@ Proofnet: A p2p broadcast network based on proof-of-work to prioritize messages.
 Proofnet was introduced on the Bitcoin Forum. You can track progress here:
 https://forum.bitcoin.org/index.php?topic=31038.0
 
+This implementation is written in Python 3.2.
+
 The format for a Proofnet message is this:
 (proof-of-work hash)(nonce)(utc timestamp)(channel hash)(message type hash)\
 (message)
