@@ -6,7 +6,7 @@ import time
 pm=proofnet.proof_message()
 pm.set_target(b"\x00\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF")
 print("target: %s" % base64.b16encode(pm.target))
-pm.set_channel("Proofnet1")
+pm.set_channel("proofnet")
 pm.set_message_type("proofnet:text")
 pm.set_message(b"my test message")
 pm.nonce=10958290

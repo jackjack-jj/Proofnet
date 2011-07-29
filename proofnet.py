@@ -3,8 +3,12 @@ import hashlib
 import time
 
 known_hash_strings=[\
+		"proofnet",\
 		"proofnet.1",\
 		"proofnet.2",\
+		"proofnet.3",\
+		"proofnet.4",\
+		"proofnet.5",\
 		"proofnet:text",\
 		"proofnet:textfrom",\
 		"proofnet:textto",\
