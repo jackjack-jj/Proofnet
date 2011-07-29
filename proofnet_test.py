@@ -2,7 +2,7 @@ import unittest
 import hashlib
 import proofnet
 
-class proofnet_test(unittest.TestCase):
+class proof_message_test(unittest.TestCase):
 	def test_set_target_nzeros(self):
 		pn=proofnet.proof_message()
 		pn.set_target_nzeros(8)
@@ -55,6 +55,17 @@ class proofnet_test(unittest.TestCase):
 		self.assertEqual(pm2.message.decode('utf-8'),message)
 		self.assertEqual(pm2.channel,channel)
 		self.assertEqual(pm2.message_type,message_type)
+
+class proof_message_text_test(unittest.TestCase):
+	def test_init(self):
+		pn=proofnet.proof_message_text()
+		self.assertEqual("proofnet:text", pn.message_type)
+
+	def test_set_get_message(self):
+		pn=proofnet.proof_message_text()
+		mytext="this is my test text"
+		pn.set_text(mytext)
+		self.assertEqual(mytext, pn.get_text())
 
 if __name__=="__main__":
 	unittest.main()

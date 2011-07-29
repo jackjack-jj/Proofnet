@@ -156,8 +156,15 @@ class proof_message:
 					return progress
 
 class proof_message_text(proof_message):
+	def __init__(self):
+		proof_message.__init__(self)
+		self.set_message_type("proofnet:text")
+
 	def get_text(self):
-		return m.encode('utf-8')
+		return self.message.decode('utf-8')
+	
+	def set_text(self, text):
+		self.message=text.encode()
 
 
 
