@@ -2,14 +2,19 @@ import struct
 import hashlib
 import time
 
-known_hashes={\
-		hashlib.sha256(b"Proofnet1").digest():"Proofnet1",\
-		hashlib.sha256(b"Proofnet2").digest():"Proofnet2",\
-		hashlib.sha256(b"proofnet:text").digest():"proofnet:text",\
-		hashlib.sha256(b"proofnet:textfrom").digest():"proofnet:textfrom",\
-		hashlib.sha256(b"proofnet:textto").digest():"proofnet:textto",\
-		hashlib.sha256(b"proofnet:AESchannel").digest():"proofnet:AESchannel",\
-		}
+known_hash_strings=[\
+		"proofnet.1",\
+		"proofnet.2",\
+		"proofnet:text",\
+		"proofnet:textfrom",\
+		"proofnet:textto",\
+		"proofnet:encrypted",\
+		]
+
+known_hashes={}
+
+for string in known_hash_strings:
+	known_hashes[hashlib.sha256(string.encode()).digest()]=string
 
 def invert_hash(hashbytes):
 	try:

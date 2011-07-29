@@ -14,7 +14,7 @@ class proofnet_test(unittest.TestCase):
 		self.assertEqual(False,inverted)
 
 	def testEncodeDecode(self):
-		channel="Proofnet1"
+		channel="proofnet.1"
 		message_type="proofnet:text"
 		message="My UTF-8 text message."
 		pm=proofnet.proof_message()
