@@ -128,7 +128,19 @@ class proof_message:
 			target.append(byte)
 		target=bytes(target)
 		self.target=target
-			
+
+	def get_target_nzeros(self):
+		nzeros=0
+		for byte in self.target:
+			for n in range(8):
+				this_nzeros=0
+				if byte<2**n:
+					this_nzeros+=8-n
+					break
+			if this_nzeros==0:
+				break
+			nzeros+=this_nzeros
+		return nzeros
 
 	def do_work(self):
 		target=self.target

@@ -16,6 +16,21 @@ class proofnet_test(unittest.TestCase):
 		pn.set_target_nzeros(7)
 		self.assertEqual(pn.target, b'\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff')
 
+	def test_set_and_get_target_nzeros(self):
+		pn=proofnet.proof_message()
+		pn.set_target_nzeros(8)
+		self.assertEqual(pn.get_target_nzeros(),8)
+		pn.set_target_nzeros(50)
+		self.assertEqual(pn.get_target_nzeros(),50)
+		pn.set_target_nzeros(4)
+		self.assertEqual(pn.get_target_nzeros(),4)
+		pn.set_target_nzeros(32)
+		self.assertEqual(pn.get_target_nzeros(),32)
+		pn.set_target(b'\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff')
+		self.assertEqual(pn.get_target_nzeros(),8)
+		pn.set_target(b'\x00\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff')
+		self.assertEqual(pn.get_target_nzeros(),8)
+
 	def test_invert_hash_success(self):
 		mytext="proofnet:text"
 		inverted=proofnet.invert_hash(hashlib.sha256(mytext.encode()).digest())
