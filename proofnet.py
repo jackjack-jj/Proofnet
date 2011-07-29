@@ -113,6 +113,23 @@ class proof_message:
 	def set_target(self, target_bytes):
 		self.target=target_bytes
 
+	def set_target_nzeros(self, nzeros):
+		"""nzeros must be integer for now"""
+		target=[]
+		for i in range(32):
+			if nzeros>=8:
+				byte=0
+				nzeros=nzeros-8
+			elif nzeros>0:
+				byte=2**(8-nzeros)-1
+				nzeros=0
+			else:
+				byte=255
+			target.append(byte)
+		target=bytes(target)
+		self.target=target
+			
+
 	def do_work(self):
 		target=self.target
 		progress=0
