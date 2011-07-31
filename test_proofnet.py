@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.2
+
 import unittest
 import hashlib
 import proofnet

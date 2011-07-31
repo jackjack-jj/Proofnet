@@ -46,8 +46,7 @@ class proof_message:
 		self.proof_hash=bytes()
 		self.nonce=0
 		self.utc_time=time.time()
-		self.channel=""
-		self.channel_hash=bytes()
+		self.set_channel("proofnet")
 		self.message_type=""
 		self.message_type_hash=bytes()
 		self.message=bytes()
@@ -77,7 +76,7 @@ class proof_message:
 
 	def set_message(self, message):
 		self.message=message
-	
+
 	def get_after_proof_bytes(self):
 		b=bytes()
 		nonce=int(self.nonce)
@@ -89,6 +88,7 @@ class proof_message:
 		b+=self.channel_hash
 		b+=self.message_type_hash
 		b+=self.message
+		assert len(b)>=4+4+32+32, "Bytes after proof too short be a Proofnet message"
 		return b
 
 	def is_recent(self):
@@ -103,7 +103,8 @@ class proof_message:
 		return True
 
 	def get_bytes(self):
-		return self.proof_hash+self.get_after_proof_bytes()
+		mybytes=self.proof_hash+self.get_after_proof_bytes()
+		return mybytes
 
 	def calc_proof_hash(self):
 		b=self.get_after_proof_bytes()
@@ -146,7 +147,7 @@ class proof_message:
 		target=self.target
 		progress=0
 		while 1:
-			for nonce in range(0,1000000):
+			for nonce in range(0,2**32-1):
 				progress+=1
 				self.update_utc_time()
 				self.nonce=nonce
