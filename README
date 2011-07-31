@@ -10,8 +10,8 @@ The format for a Proofnet message is this:
 (message)
 
 Where the types are this:
-(sha256 hash)(64bit integer)(64bit integer)(sha256 hash)(sha256 hash)\
+(sha256 hash)(32bit integer)(32bit integer)(sha256 hash)(sha256 hash)\
 (any number of bytes)
 
-Note that the proof-of-work hashes are big endian, and the 64bit integers are
+Note that the proof-of-work hashes are big endian, and the 32bit integers are
 little endian.
