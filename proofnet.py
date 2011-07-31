@@ -53,16 +53,16 @@ class proof_message:
 		self.message=bytes()
 
 	def decode_from_bytes(self, pmbytes):
-		assert len(pmbytes)>=32+8+8+32+32,\
+		assert len(pmbytes)>=32+4+4+32+32,\
 				"Message too short to be a proofnet message"
 		self.proof_hash=pmbytes[0:32]
-		self.nonce=struct.unpack("L",pmbytes[32:32+8])[0]
-		self.utc_time=float(struct.unpack("L",pmbytes[32+8:32+8+8])[0])
-		self.channel_hash=pmbytes[32+8+8:32+8+8+32]
+		self.nonce=struct.unpack("I",pmbytes[32:32+4])[0]
+		self.utc_time=float(struct.unpack("I",pmbytes[32+4:32+4+4])[0])
+		self.channel_hash=pmbytes[32+4+4:32+4+4+32]
 		self.channel=invert_hash(self.channel_hash)
-		self.message_type_hash=pmbytes[32+8+8+32:32+8+8+32+32]
+		self.message_type_hash=pmbytes[32+4+4+32:32+4+4+32+32]
 		self.message_type=invert_hash(self.message_type_hash)
-		self.message=pmbytes[32+8+8+32+32:len(pmbytes)]
+		self.message=pmbytes[32+4+4+32+32:len(pmbytes)]
 	
 	def update_utc_time(self):
 		self.utc_time=time.time()
@@ -81,10 +81,10 @@ class proof_message:
 	def get_after_proof_bytes(self):
 		b=bytes()
 		nonce=int(self.nonce)
-		nonce_bytes=struct.pack("L",nonce)
+		nonce_bytes=struct.pack("I",nonce)
 		b+=nonce_bytes
 		time=int(self.utc_time)
-		time_bytes=struct.pack("L",time)
+		time_bytes=struct.pack("I",time)
 		b+=time_bytes
 		b+=self.channel_hash
 		b+=self.message_type_hash
