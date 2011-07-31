@@ -2,7 +2,7 @@ import unittest
 import hashlib
 import proofnet
 
-class proof_message_test(unittest.TestCase):
+class test_proof_message(unittest.TestCase):
 	def test_set_target_nzeros(self):
 		pn=proofnet.proof_message()
 		pn.set_target_nzeros(8)
